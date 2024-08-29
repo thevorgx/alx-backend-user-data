@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 """Regex-ing given fields"""
-import mysql.connector
-import os
 import logging
 import re
 from typing import List
@@ -31,17 +29,6 @@ def get_logger() -> logging.Logger:
 
     logger.addHandler(handler)
     return (logger)
-
-
-def get_db() -> mysql.connector.connection.MySQLConnection:
-    """place holder for now"""
-    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
-    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', 'localhost')
-    host = os.getenv('PERSONAL_DATA_DB_HOST', '')
-    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
-    db_connect = mysql.connector.connect(host=host, user=username,
-                                         password=password, database=db_name)
-    return(db_connect)
 
 
 class RedactingFormatter(logging.Formatter):
