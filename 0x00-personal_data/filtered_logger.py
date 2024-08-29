@@ -21,6 +21,7 @@ def get_logger() -> logging.Logger:
     """Create and configure a logger for user data"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
+    logger.propagate = False
 
     handler = logging.StreamHandler()
 
