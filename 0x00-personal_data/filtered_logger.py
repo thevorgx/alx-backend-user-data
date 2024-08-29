@@ -5,6 +5,9 @@ import re
 from typing import List
 
 
+PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
+
+
 def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """Obfuscate fields using a ragex pattern(field + separator)"""
@@ -12,6 +15,19 @@ def filter_datum(fields: List[str], redaction: str,
         ragex_patt = rf'({field}=)[^{separator}]*'
         message = re.sub(ragex_patt, rf'\1{redaction}', message)
     return (message)
+
+
+def get_logger() -> logging.Logger:
+    """Create and configure a logger for user data"""
+    logger = logging.getLogger("user_data")
+    logger.setLevel(logging.INFO)
+
+    handler = logging.StreamHandler()
+
+    handler.setFormatter(RedactingFormatter(PII_FIELDS))
+
+    logger.addHandler(handler)
+    return (logger)
 
 
 class RedactingFormatter(logging.Formatter):
