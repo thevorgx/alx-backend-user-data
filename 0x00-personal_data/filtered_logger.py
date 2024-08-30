@@ -4,7 +4,7 @@ import os
 import mysql.connector
 import logging
 import re
-from typing import List
+from typing import List, Union
 
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -33,7 +33,7 @@ def get_logger() -> logging.Logger:
     return (logger)
 
 
-def get_db() -> mysql.connector.connection.MySQLConnection:
+def get_db() -> Union[mysql.connector.connection.MySQLConnection, object]:
     """connect to db using mysql connector"""
     username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
     password = os.getenv('PERSONAL_DATA_DB_PASSWORD', 'localhost')
