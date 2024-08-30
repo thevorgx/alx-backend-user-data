@@ -16,7 +16,7 @@ def filter_datum(fields: List[str], redaction: str,
     for field in fields:
         ragex_patt = rf'({field}=)[^{separator}]*'
         message = re.sub(ragex_patt, rf'\1{redaction}', message)
-    return (message)
+    return message
 
 
 def get_logger() -> logging.Logger:
@@ -30,7 +30,7 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
 
     logger.addHandler(handler)
-    return (logger)
+    return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
