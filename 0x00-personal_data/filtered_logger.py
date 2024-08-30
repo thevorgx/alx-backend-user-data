@@ -67,3 +67,25 @@ class RedactingFormatter(logging.Formatter):
                                         original_message, self.SEPARATOR)
         record.msg = redacted_message
         return super().format(record)
+
+
+def main():
+    """main app exec"""
+    logger = get_logger()
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users;")
+    rows = cursor.fetchall()
+    for row in rows:
+        key_value_pairs = []
+        for key, value in row.items():
+            key_value_pair = f"{key}={value}"
+            key_value_pairs.append(key_value_pair)
+        row_string = '; '.join(key_value_pairs)
+        logger.info(row_string)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
