@@ -32,8 +32,7 @@ def users():
 
 @app.route("/sessions", methods=["POST"])
 def login():
-    """POST /sessions
-    Logs in a user and sets a session cookie."""
+    """POST /sessions Logs in a user and sets a session cookie"""
     email = request.form.get("email")
     password = request.form.get("password")
 
