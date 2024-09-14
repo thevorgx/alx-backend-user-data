@@ -38,7 +38,9 @@ class Auth:
         """Check if a login is valid by verifying the email and password"""
         try:
             user = self._db.find_user_by(email=email)
-            if bcrypt.checkpw(password.encode('utf-8'), user.hashed_password):
+            pw = password.encode('utf-8')
+            user_h = user.hashed_password.encode('utf-8')
+            if bcrypt.checkpw(pw, user_h):
                 return True
         except NoResultFound:
             return False
