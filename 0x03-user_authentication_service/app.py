@@ -50,7 +50,7 @@ def login() -> str:
 
 @app.route("/sessions", methods=["DELETE"])
 def logout():
-    """log out a user by destroying the session."""
+    """log out a user by destroying the session"""
     session_id = request.cookies.get("session_id")
 
     if not session_id:
@@ -62,6 +62,21 @@ def logout():
         response = redirect("/")
         response.delete_cookie("session_id")
         return response
+
+    abort(403)
+
+
+@app.route("/profile", methods=["GET"])
+def profile():
+    """GET /profile Returns the user's email if the session ID is valid"""
+    session_id = request.cookies.get("session_id")
+
+    if not session_id:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+    if user:
+        return jsonify({"email": user.email})
 
     abort(403)
 
