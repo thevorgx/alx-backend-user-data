@@ -109,7 +109,7 @@ def update_password():
 
     try:
         AUTH.update_password(reset_token, new_password)
-        return jsonify({"message": "password updated"})
+        return jsonify({"email": email, "message": "Password updated"})
     except ValueError:
         return jsonify({"message": "invalid reset token"}), 403
 
